@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>View and add grades</title>
+</head>
+<body>
+<h1>Grades</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Date</th>
+        <th>Subject</th>
+        <th>Grade</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="studentGrade : ${student.getGrades()}">
+        <td th:text="${studentGrade.date}"></td>
+        <td th:text="${studentGrade.subject}"></td>
+        <td th:text="${studentGrade.gradeInt}"></td>
+    </tr>
+    </tbody>
+</table>
+<h1>Add a new grade</h1>
+<form th:action="@{/students/grades/{id} (id=${student.id})}" method="post" th:object="${grade}">
+
+    <div>
+        <label th:for="date">Date</label>
+        <input type="date" th:field="*{date}">
+    </div>
+    <div>
+        <label th:for="subject">Subject</label>
+        <select th:field="*{subject}">
+            <option th:each="subject : ${subjects}" th:value="${subject}" th:text="${subject}"></option>
+        </select>
+    </div>
+
+    <div>
+        <input th:each="grade : ${gradeNums}" type="radio" th:field="*{gradeInt}" th:value="${grade}" th:text="${grade}">
+    </div>
+
+    <input type="submit" value="Save">
+</form>
+</body>
+</html>
