@@ -52,7 +52,12 @@ public class Controller {
         Student student = studentRepository.findById(id).orElseThrow(() -> {
             throw new IllegalArgumentException("ID is invalid!");
         });
+
         grade.setStudent(student);
+
+        if(grade.getGradeInt() == null || grade.getDate() == null) {
+            throw new IllegalArgumentException("Date or Grade int is null!");
+        }
         gradeRepository.save(grade);
 
         return "redirect:/students/grades/"+id;

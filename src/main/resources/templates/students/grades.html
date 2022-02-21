@@ -3,15 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>View and add grades</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <style>
+        h1, table, form {
+            margin-top: 40px;
+            margin-bottom: 30px;
+        }
+        .margin-table{
+            margin: 0 auto;
+            width: 500px;
+        }
+        input[type=radio] {
+            margin-left: 25px;
+        }
+
+        form {
+            width: 500px;
+            margin: 0 auto;
+        }
+    </style>
 </head>
 <body>
-<h1>Grades</h1>
-<table>
+<h1 style="margin-top: 40px; margin: 0 auto; width:100px; ">Grades</h1>
+<table class="table margin-table" style="margin-top: 40px; margin-bottom: 40px">
+
     <thead>
     <tr>
-        <th>Date</th>
-        <th>Subject</th>
-        <th>Grade</th>
+        <th scope="row">Date</th>
+        <th scope="row">Subject</th>
+        <th scope="row">Grade</th>
     </tr>
     </thead>
 
@@ -23,25 +43,26 @@
     </tr>
     </tbody>
 </table>
-<h1>Add a new grade</h1>
+<hr>
 <form th:action="@{/students/grades/{id} (id=${student.id})}" method="post" th:object="${grade}">
-
-    <div>
-        <label th:for="date">Date</label>
-        <input type="date" th:field="*{date}">
+    <h1>Add a new grade</h1>
+    <div class="mb-3">
+        <label class="form-label" th:for="date">Date</label>
+        <input class="form-control" type="date" th:field="*{date}">
     </div>
-    <div>
-        <label th:for="subject">Subject</label>
-        <select th:field="*{subject}">
+    <div class="mb-3">
+        <label class="form-label" th:for="subject">Subject</label>
+        <select class="form-control"  th:field="*{subject}">
             <option th:each="subject : ${subjects}" th:value="${subject}" th:text="${subject}"></option>
         </select>
     </div>
 
-    <div>
-        <input th:each="grade : ${gradeNums}" type="radio" th:field="*{gradeInt}" th:value="${grade}" th:text="${grade}">
+    <div class="mb-3">
+        <label class="form-label">Grade</label><br>
+        <input class="form-check-input" th:each="grade : ${gradeNums}" type="radio" th:field="*{gradeInt}" th:value="${grade}" th:text="' ' + ${grade}">
     </div>
 
-    <input type="submit" value="Save">
+    <input class="btn btn-primary" type="submit" value="Save">
 </form>
 </body>
 </html>

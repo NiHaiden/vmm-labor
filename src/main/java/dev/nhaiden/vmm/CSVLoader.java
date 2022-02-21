@@ -28,7 +28,7 @@ public class CSVLoader implements CommandLineRunner {
     public GradeRepository gradeRepository;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args)  {
 
         try(BufferedReader bufferedReader = new BufferedReader(new FileReader(getGradesFile()))) {
             String line;
@@ -37,6 +37,8 @@ public class CSVLoader implements CommandLineRunner {
                 out.println(line);
                 gradeRepository.save(fromCSV(line));
             }
+        } catch (IOException ioe) {
+            System.exit(1);
         }
     }
 
@@ -46,7 +48,7 @@ public class CSVLoader implements CommandLineRunner {
 
     public Grade fromCSV(String csvLine) {
         out.println("CSV LINE: " + csvLine);
-        String parts[] = csvLine.split(",");
+        String[] parts = csvLine.split(",");
         String studentID = parts[0];
         LocalDate assignedDate = LocalDate.parse(parts[1]);
         String subject = parts[2];
